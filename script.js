@@ -13,6 +13,16 @@ let height = document.querySelector('.height-pokemon');
 let ability = document.querySelector('.ability-pokemon');
 let id = document.querySelector('.id-pokemon');
 let fillHp = document.querySelector('.fill-hp');
+let fillat = document.querySelector('.fill-attack');
+let filldf = document.querySelector('.fill-defend');
+let fillsa = document.querySelector('.fill-sa');
+let fillsd = document.querySelector('.fill-sd');
+let fillspd = document.querySelector('.fill-speed');
+let evoInfo = document.querySelector('.evo-detail p');
+let normalForm = document.querySelector('.normal-form .evo-detail h4');
+let evoTypeOne = document.querySelector('.first-evo .evo-detail h4');
+let evoTypeTwo = document.querySelector('.second-evo .evo-detail h4');
+let moveList = document.querySelector('.moves');
 
 
 
@@ -20,7 +30,7 @@ let fillHp = document.querySelector('.fill-hp');
  * Fetches a pokemon.
  */
 function fetchPokemon() {
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=9')
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=6')
         .then(response => response.json())
         .then(function(allpokemon) {
             let pokemons = allpokemon.results;
@@ -44,15 +54,19 @@ function pokeData(url) {
     fetch(url)
         .then(res => res.json())
         .then(function(pokemon) {
-            console.log(pokemon);
+            // console.log(pokemon);
+            let species = pokemon['species']['url'];
+            // console.log(species);
             name.textContent = pokemon['name'];
             img.src = pokemon['sprites']['front_default'];
             type.textContent = pokemon['types']['0']['type']['name'];
 
             let t2 = pokemon['types']['1'];
-            if (!t2) {
-                type2.classList.add('none');
-            } else type2.textContent = pokemon['types']['1']['type']['name'];
+            if (t2) {
+                type2.classList.remove('none');
+                type2.textContent = pokemon['types']['1']['type']['name'];
+            } else 
+            type2.classList.add('none');
 
             id.textContent = pokemon['id'];
             weight.textContent = pokemon['weight'] + 'cm';
@@ -60,11 +74,55 @@ function pokeData(url) {
             ability.textContent = pokemon['abilities']['0']['ability']['name'] + ', ' + pokemon['abilities']['1']['ability']['name']  ;
 
             fillHp.style.width = `${pokemon['stats']['0']['base_stat']}%`;
-            fillat.style.width = `${pokemon['stats']['0']['base_stat']}%`;
-            filldf.style.width = `${pokemon['stats']['0']['base_stat']}%`;
-            fillspat.style.width = `${pokemon['stats']['0']['base_stat']}%`;
-            fillspdf.style.width = `${pokemon['stats']['0']['base_stat']}%`;
-            fillspd.style.width = `${pokemon['stats']['0']['base_stat']}%`;
+            fillat.style.width = `${pokemon['stats']['1']['base_stat']}%`;
+            filldf.style.width = `${pokemon['stats']['2']['base_stat']}%`;
+            fillsa.style.width = `${pokemon['stats']['3']['base_stat']}%`;
+            fillsd.style.width = `${pokemon['stats']['4']['base_stat']}%`;
+            fillspd.style.width = `${pokemon['stats']['5']['base_stat']}%`;
+
+            // move
+            let moves = pokemon['moves'];
+            console.log(moves);
+            moves.forEach(function(move) {
+                moveList.insertAdjacentHTML('beforeend', `
+                <li onclick=moveDetails('${move['move']['url']}'> ${move['move']['name']} </li>`);
+            })
+
+            // fetchEvo(id);
+            fetchSpecies(species);
+
+                function fetchSpecies(species) {
+                    fetch(species)
+                        .then(res => res.json())
+                        .then(function(species) {
+                            let evo = species['evolution_chain']['url'];
+                            // console.log(evo);
+                            fetchEvo(evo)
+                        })
+
+                }
+
+
+                function fetchEvo(evo) {
+                    fetch(evo)
+                        .then(res => res.json())
+                        .then(function(evo) {
+                            let evolv = evo['chain'];
+                            normalForm.textContent = evolv['species']['name'];
+                            if (evolv['evolves_to']['0']) {
+                                evoTypeOne.textContent = evolv['evolves_to']['0']['species']['name'];
+                            } else evoTypeOne.classList.add('none');
+
+                            if (evolv['evolves_to']['0']['evolves_to']['0']) {
+                                document.querySelector('.second-evo').classList.remove('none');
+                                evoTypeTwo.textContent = evolv['evolves_to']['0']['evolves_to']['0']['species']['name'];
+                            } else document.querySelector('.second-evo').classList.add('none');
+
+                            
+                        
+                            console.log(evolv);
+                        })
+                }
         })
 }
 
@@ -109,17 +167,14 @@ function evo() {
     openEvoContent();
 }
 
-function openEvoContent() {
+function openEvoContent(id) {
     evoContent.classList.remove('none');
 
-    fetch('https://pokeapi.co/api/v2/evolution-chain/1')
-    .then(res => res.json())
-    .then(function(evo) {
-        let evolution = evo['chain']['evolves_to'];
-        let level = evolution['0']['evolution_details']['0']['min_level'];
-        console.log('evolution to ' + evolution['0']['evolves_to'][
-            '0']['species']['name'] + ' at level ' + level);
-    })
+}
+
+// move
+function move() {
+
 }
 
 
