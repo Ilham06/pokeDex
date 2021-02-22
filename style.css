@@ -1,0 +1,237 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: arial;
+}
+
+.none {
+	display: none;
+}
+
+.pokelist {
+	position: absolute;
+}
+
+.card {
+	width: 300px;
+	height: 470px;
+	background-color: cadetblue;
+	margin: 50px auto;
+	border-radius: 25px;
+	overflow: hidden;
+	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card .header {
+	width: 100%;
+	height: 150px;
+	background-color: cadetblue;
+}
+
+.card .header .name h2{
+	position: absolute;
+	color: white;
+	margin-top: 60px;
+	margin-left: 20px;
+}
+
+.header .type {
+	position: absolute;
+	top: 130px;
+	margin: 20px;
+
+}
+
+.header .type .type-one {
+	background-color: rgba(255,255,255,.5);
+	color: white;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 0.6em;
+	padding: 5px;
+	border-radius: 8px;
+}
+
+.header .type .type-two {
+	background-color: rgba(255,255,255,.5);
+	color: white;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 0.6em;
+	padding: 5px;
+	border-radius: 8px;
+}
+
+.id {
+	position: absolute;
+	top: 70px;
+	margin-left: 20px;
+	color: white;
+	font-weight: lighter;
+	font-size: .8em;
+
+}
+
+.card .detail {
+	width: 100%;
+	height: 400px;
+	background-color: whitesmoke;
+	border-top-left-radius: 25px;
+	border-top-right-radius: 25px;
+}
+
+.menu-list {
+	display: flex;
+	justify-content: space-around;
+	list-style: none;
+	padding-top: 40px;
+	font-size: 0.7em;
+}
+
+.menu-list a {
+	text-decoration: none;
+	color: #aaa;
+	transition: .5;
+}
+
+.menu-list a:hover {
+	color: #333;
+}
+
+.content {
+	width: 100%;
+	height: 350px;
+	margin-top: 25px;
+	display: flex;
+}
+
+.content .about-content {
+	height: 65%;
+	width: 40%;
+}
+
+.content .about-content-right {
+	height: 65%;
+	width: 60%;
+}
+
+.content .about-content ul {
+	display: flex;
+	flex-direction: column;
+}
+
+.content .about-content ul li {
+	list-style: none;
+	margin-left: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: #333;
+	font-size: 0.8em;
+}
+
+.content .about-content-right ul {
+	display: flex;
+	flex-direction: column;
+}
+
+.content .about-content-right ul li {
+	list-style: none;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: #333;
+	font-size: 0.8em;
+}
+
+.image .pokemon-image {
+	position: relative;
+	width: 150px;
+	height: 150px;
+	left: 150px;
+	top: 15px;
+}
+
+/*stats*/
+
+.content .stat-content {
+	width: 100%;
+	height: 100%;
+}
+
+.progress-box {
+	margin-bottom: 20px;
+}
+
+.progress-box p {
+	margin-top: 5px;
+	color: #888;
+	
+}
+
+.progress-box .progress-bar {
+	margin-left: 125px;
+	margin-top: -10px;
+	width: 50%;
+	background-color: #e0e0e0;
+	border-radius: 3px;
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+}
+			
+.progress-bar-fill {
+	display: block;
+	height: 6px;
+	background-color: #659cef;
+	border-radius: 3px;
+}
+
+.stat-content p {
+	margin-left: 25px;
+	margin-bottom: 3px;
+	font-size: .8em;
+}
+
+/*evo*/
+
+.content .evo-content {
+	width: 100%;
+	height: 100%;
+	/*display: flex;
+	flex-direction: column;*/
+}
+
+.content .evo-content .evo-box {
+	width: 90%;
+	height: 90px;
+	background-color: cadetblue;
+	margin: 15px;
+	border-radius: 7px;
+	color: white;
+}
+
+.evo-box .evo-detail {
+	padding: 10px;
+}
+
+.evo-box .evo-detail p {
+	margin-top: 5px;
+	font-size: .7em;
+}
+
+.evo-box .type-box {
+	margin-top: 15px;
+}
+
+.type-box .type {
+	background-color: rgba(255,255,255,.5);
+	color: white;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 0.6em;
+	padding: 5px;
+	border-radius: 8px;
+}
+
+
+
+
+
