@@ -51,16 +51,6 @@ function pokeData(url) {
         .then(function(pokemon) {
             let species = pokemon['species']['url'];
             let t2 = pokemon['types']['1'];
-            let typeBg = pokemon['types']['0']['type']['name'];
-            switch (typeBg) {
-                case typeBg = 'grass':
-                    headerBg.style.backgroundColor = "green";
-                    break;
-                default:
-                    // statements_def
-                    break;
-            }
-
             name.textContent = pokemon['name'];
             img.src = pokemon['sprites']['front_default'];
             type.textContent = pokemon['types']['0']['type']['name'];
