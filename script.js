@@ -3,14 +3,17 @@ let aboutContent = document.querySelector('.about-content');
 let aboutContentRight = document.querySelector('.about-content-right');
 let statContent = document.querySelector('.stat-content');
 let evoContent = document.querySelector('.evo-content');
+let moveContent = document.querySelector('.moves-content');
 let pokelist = document.querySelector('.pokelist');
 let name = document.querySelector('h2');
 let img = document.querySelector('.pokemon-image');
 let type = document.querySelector('.type-one');
 let type2 = document.querySelector('.type-two');
+let gen = document.querySelector('.gen-pokemon');
 let weight = document.querySelector('.weight-pokemon');
 let height = document.querySelector('.height-pokemon');
 let ability = document.querySelector('.ability-pokemon');
+let habitat = document.querySelector('.habitat-pokemon');
 let id = document.querySelector('.id-pokemon');
 let fillHp = document.querySelector('.fill-hp');
 let fillat = document.querySelector('.fill-attack');
@@ -22,7 +25,8 @@ let evoInfo = document.querySelector('.evo-detail p');
 let normalForm = document.querySelector('.normal-form .evo-detail h4');
 let evoTypeOne = document.querySelector('.first-evo .evo-detail h4');
 let evoTypeTwo = document.querySelector('.second-evo .evo-detail h4');
-let moveList = document.querySelector('.moves');
+let moveList = document.querySelector('.moves-list');
+let moveBox = document.querySelector('.moves-box');
 
 
 
@@ -35,8 +39,6 @@ function fetchPokemon() {
         .then(function(allpokemon) {
             let pokemons = allpokemon.results;
             pokemons.forEach(pokemon => {
-
-
                 pokelist.insertAdjacentHTML('beforeend', `
     			<li onclick=pokeData('${pokemon['url']}')> ${pokemon['name']} </li>`);
             })
@@ -80,13 +82,22 @@ function pokeData(url) {
             fillsd.style.width = `${pokemon['stats']['4']['base_stat']}%`;
             fillspd.style.width = `${pokemon['stats']['5']['base_stat']}%`;
 
-            // move
             let moves = pokemon['moves'];
-            console.log(moves);
-            moves.forEach(function(move) {
-                moveList.insertAdjacentHTML('beforeend', `
-                <li onclick=moveDetails('${move['move']['url']}'> ${move['move']['name']} </li>`);
+            moves.forEach(move => {
+                let moveUrl = move['move']['url'];
+                fetchMove(moveUrl);
             })
+
+            function fetchMove(url) {
+                fetch(url)
+                    .then(res => res.json())
+                    .then(function(move) {
+                        console.log(move);
+                        moveList.insertAdjacentHTML('beforeend', `
+                        <li class="moves-detail"> ${move['name']} <span>${move['power']}</span> </li>`);
+                    })
+            }
+
 
             // fetchEvo(id);
             fetchSpecies(species);
@@ -96,8 +107,11 @@ function pokeData(url) {
                         .then(res => res.json())
                         .then(function(species) {
                             let evo = species['evolution_chain']['url'];
-                            // console.log(evo);
-                            fetchEvo(evo)
+                            // console.log(species['generation']['name']);
+                            // console.log(species['habitat']['name']);
+                            gen.textContent = species['generation']['name'];
+                            habitat.textContent = species['habitat']['name'];
+                            fetchEvo(evo);
                         })
 
                 }
@@ -117,10 +131,6 @@ function pokeData(url) {
                                 document.querySelector('.second-evo').classList.remove('none');
                                 evoTypeTwo.textContent = evolv['evolves_to']['0']['evolves_to']['0']['species']['name'];
                             } else document.querySelector('.second-evo').classList.add('none');
-
-                            
-                        
-                            console.log(evolv);
                         })
                 }
         })
@@ -132,6 +142,7 @@ function pokeData(url) {
 function about() {
     statContent.classList.add('none');
     evoContent.classList.add('none');
+    moveContent.classList.add('none');
     openAboutContent();
 }
 
@@ -147,23 +158,20 @@ function stat() {
     aboutContent.classList.add('none');
     aboutContentRight.classList.add('none');
     evoContent.classList.add('none');
+    moveContent.classList.add('none');
     openStatContent();
 }
 
 function openStatContent() {
     statContent.classList.remove('none');
-
-
-
-
 }
 
 // evo
-
 function evo() {
     aboutContent.classList.add('none');
     aboutContentRight.classList.add('none');
     statContent.classList.add('none');
+    moveContent.classList.add('none');
     openEvoContent();
 }
 
@@ -174,7 +182,15 @@ function openEvoContent(id) {
 
 // move
 function move() {
+    aboutContent.classList.add('none');
+    aboutContentRight.classList.add('none');
+    statContent.classList.add('none');
+    evoContent.classList.add('none');
+    openMoveContent();
+}
 
+function openMoveContent() {
+    moveContent.classList.remove('none');
 }
 
 
